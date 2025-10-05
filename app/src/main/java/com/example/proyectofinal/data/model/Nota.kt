@@ -1,15 +1,16 @@
-package com.example.proyectofinal.data.model
-
-import java.time.LocalDateTime
+package com.example.proyectofinaldata class Recordatorio(
+    val id: String,
+    val fechaHora: Long, // Timestamp en milisegundos
+    val notificada: Boolean = false)a.model
 
 data class Nota(
     val id: String,
     val titulo: String,
     val descripcion: String,
-    val fechaCreacion: LocalDateTime,
+    val fechaCreacion: Long, // Timestamp en milisegundos
     val archivosMultimedia: List<ArchivoMultimedia>,
     val tipo: TipoNota,
-    val fechaLimite: LocalDateTime? = null,
+    val fechaLimite: Long? = null, // Timestamp en milisegundos
     val recordatorios: List<Recordatorio> = emptyList(),
     val completada: Boolean = false
 )
@@ -24,7 +25,7 @@ data class ArchivoMultimedia(
     val tipo: TipoArchivo,
     val uri: String,
     val descripcion: String?,
-    val fechaCreacion: LocalDateTime
+    val fechaCreacion: Long // Timestamp en milisegundos
 )
 
 enum class TipoArchivo {
