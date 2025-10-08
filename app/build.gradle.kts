@@ -1,8 +1,15 @@
+// Añade esta línea al principio del archivo.
+import androidx.glance.appwidget.compose
+import androidx.navigation.compose.navigation
+import org.jetbrains.kotlin.kapt.gradle.KaptExtension
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
-    kotlin("kapt")
+    // Se usan los alias definidos en libs.versions.toml
+    alias(libs.plugins.kotlin.kapt)
+    alias(libs.plugins.hilt.android)
 }
 
 android {
@@ -18,7 +25,7 @@ android {
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
-//ll
+
     buildTypes {
         release {
             isMinifyEnabled = false
@@ -41,15 +48,22 @@ android {
 }
 
 dependencies {
-
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
-    // Room
-    implementation("androidx.room:room-runtime:2.6.1")
-    implementation("androidx.room:room-ktx:2.6.1")
-    add("kapt", "androidx.room:room-compiler:2.6.1")
     implementation(libs.androidx.activity.compose)
     implementation(platform(libs.androidx.compose.bom))
+
+    // Room (usando el catálogo de versiones)
+    implementation(libs.room.runtime)
+    implementation(libs.room.ktx)
+    kapt(libs.room.compiler)
+
+    // Hilt (usando el catálogo de versiones)
+    implementation(libs.hilt.android)
+    kapt(libs.hilt.compiler)
+    implementation(libs.hilt.navigation.compose)
+
+    // Otras dependencias
     implementation("com.google.code.gson:gson:2.10.1")
     implementation("androidx.navigation:navigation-compose:2.7.0")
     implementation("io.coil-kt:coil-compose:2.4.0")
@@ -57,6 +71,8 @@ dependencies {
     implementation(libs.androidx.compose.ui.graphics)
     implementation(libs.androidx.compose.ui.tooling.preview)
     implementation(libs.androidx.compose.material3)
+
+    // Dependencias de Test
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -66,4 +82,7 @@ dependencies {
     debugImplementation(libs.androidx.compose.ui.test.manifest)
 }
 
-// kapt is declared in the plugins block above
+// Bloque de configuración para Kapt.
+configure<KaptExtension> {
+    correctErrorTypes.set(true)
+}
