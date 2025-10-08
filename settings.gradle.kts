@@ -19,5 +19,5 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "Proyecto final"
+rootProject.name = "notesApp-APV-CZG"
 include(":app")

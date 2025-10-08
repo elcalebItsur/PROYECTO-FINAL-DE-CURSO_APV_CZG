@@ -1,22 +1,16 @@
-import androidx.glance.appwidget.compose
-import androidx.navigation.compose.navigation
-
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
-    kotlin("kapt") // Necesario para la anotación de Hilt
-    id("com.google.dagger.hilt.android") // Esto ahora funcionará
-    // ksp ya está presente, lo cual es bueno para Room
-    id("com.google.devtools.ksp")
+    kotlin("kapt")
 }
 
 android {
-    namespace = "com.example.proyectofinal"
+    namespace = "com.example.notesapp_apv_czg"
     compileSdk = 36
 
     defaultConfig {
-        applicationId = "com.example.proyectofinal"
+        applicationId = "com.example.notesapp_apv_czg"
         minSdk = 24
         targetSdk = 36
         versionCode = 1
@@ -44,65 +38,25 @@ android {
     buildFeatures {
         compose = true
     }
-    //APV
-    // buildFeatures/compose ya está aquí, no hace falta añadirlo de nuevo
 }
 
 dependencies {
-    // Core Android
+
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
+    // Room
+    implementation("androidx.room:room-runtime:2.6.1")
+    implementation("androidx.room:room-ktx:2.6.1")
+    add("kapt", "androidx.room:room-compiler:2.6.1")
     implementation(libs.androidx.activity.compose)
-
-    // Compose
     implementation(platform(libs.androidx.compose.bom))
+    implementation("com.google.code.gson:gson:2.10.1")
+    implementation("androidx.navigation:navigation-compose:2.7.0")
+    implementation("io.coil-kt:coil-compose:2.4.0")
     implementation(libs.androidx.compose.ui)
     implementation(libs.androidx.compose.ui.graphics)
     implementation(libs.androidx.compose.ui.tooling.preview)
     implementation(libs.androidx.compose.material3)
-    implementation(libs.androidx.compose.material.icons.extended)
-    implementation(libs.androidx.compose.material3.window.size)
-    implementation("com.google.accompanist:accompanist-permissions:0.32.0")
-    implementation("com.google.accompanist:accompanist-systemuicontroller:0.32.0")
-    implementation("com.google.accompanist:accompanist-placeholder:0.32.0")
-
-    // Navigation
-    implementation(libs.androidx.navigation.compose)
-    implementation("io.github.raamcosta.compose-destinations:core:1.9.54")
-    implementation("io.github.raamcosta.compose-destinations:animations-core:1.9.54")
-
-    // ViewModel & LiveData
-    implementation(libs.androidx.lifecycle.viewmodel.compose)
-    implementation(libs.androidx.lifecycle.runtime.compose)
-
-    // Room
-    implementation(libs.androidx.room.runtime)
-    implementation(libs.androidx.room.ktx)
-    ksp(libs.androidx.room.compiler)
-
-    // Coroutines
-    implementation(libs.kotlinx.coroutines.android)
-
-    // Media
-    implementation(libs.androidx.media3.exoplayer)
-    implementation(libs.androidx.media3.ui)
-
-    // Camera
-    implementation(libs.androidx.camera.camera2)
-    implementation(libs.androidx.camera.lifecycle)
-    implementation(libs.androidx.camera.view)
-
-    // Work Manager para notificaciones
-    implementation(libs.androidx.work.runtime.ktx)
-
-    // --- INICIO: Dependencias de Hilt ---
-    implementation("com.google.dagger:hilt-android:2.51.1")
-    kapt("com.google.dagger:hilt-compiler:2.51.1")
-    // Para la integración con Navigation Compose (opcional pero recomendado)
-    implementation("androidx.hilt:hilt-navigation-compose:1.2.0")
-    // --- FIN: Dependencias de Hilt ---
-
-    // Testing
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -112,7 +66,4 @@ dependencies {
     debugImplementation(libs.androidx.compose.ui.test.manifest)
 }
 
-// Añade este bloque al final del archivo para configurar Kapt
-kapt {
-    correctErrorTypes = true
-}
+// kapt is declared in the plugins block above
