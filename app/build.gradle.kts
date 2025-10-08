@@ -44,6 +44,7 @@ android {
     buildFeatures {
         compose = true
     }
+    //APV
     // buildFeatures/compose ya está aquí, no hace falta añadirlo de nuevo
 }
 
